@@ -15,7 +15,20 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
+            android:background="?attr/colorPrimary">
+
+            <TextView
+                fontPath="fonts/Lato-Heavy.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:letterSpacing="0.10"
+                android:text="HOME"
+                android:textAllCaps="true"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -34,12 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <ProgressBar
-                android:id="@+id/pb_recipe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone" />
+            <include layout="@layout/error_state" />
 
         </RelativeLayout>
 

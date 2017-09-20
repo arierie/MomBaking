@@ -5,6 +5,7 @@ import id.arieridwan.mombaking.di.AppComponent;
 import id.arieridwan.mombaking.di.AppModule;
 import id.arieridwan.mombaking.di.DaggerAppComponent;
 import id.arieridwan.mombaking.di.NetModule;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by arieridwan on 27/08/2017.
@@ -18,6 +19,7 @@ public class MomBakingApp extends Application {
     public void onCreate() {
         super.onCreate();
         initInject();
+        initFont();
     }
 
     private void initInject() {
@@ -29,6 +31,13 @@ public class MomBakingApp extends Application {
 
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    private void initFont(){
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Lato-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
     }
 
 }

@@ -1,5 +1,6 @@
 package id.arieridwan.mombaking.screen.recipe;
 
+import java.util.List;
 import id.arieridwan.mombaking.model.Recipe;
 
 /**
@@ -11,7 +12,7 @@ public interface RecipeContract {
         void startLoading();
         void stopAndHide();
         void stopAndError();
-        void getDataSuccess(Recipe item, String filter);
+        void getDataSuccess(List<Recipe> item);
 
     }
     interface Presenter {

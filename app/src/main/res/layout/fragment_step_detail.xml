@@ -1,9 +1,38 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_detail"
-    style="?android:attr/textAppearanceLarge"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:textIsSelectable="true"
-    tools:context="id.arieridwan.mombaking.screen.stepdetail.StepDetailFragment" />
+    android:layout_height="match_parent">
+
+    <TextView
+        android:padding="8dp"
+        fontPath="fonts/Lato-Regular.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:letterSpacing="0.01"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Ingredients" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:padding="8dp"
+        fontPath="fonts/Lato-Regular.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:letterSpacing="0.01"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Steps" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_step"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
