@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 import java.util.ArrayList;
@@ -18,12 +16,10 @@ import id.arieridwan.mombaking.MomBakingApp;
 import id.arieridwan.mombaking.R;
 import id.arieridwan.mombaking.adapter.RecipeAdapter;
 import id.arieridwan.mombaking.model.Recipe;
+import id.arieridwan.mombaking.utils.ViewUtils;
 
 public class RecipeActivity extends AppCompatActivity
         implements RecipeContract.View, SwipeRefreshLayout.OnRefreshListener {
-
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
 
     @BindView(R.id.rv_recipe)
     RecyclerView mRvRecipe;
@@ -36,7 +32,7 @@ public class RecipeActivity extends AppCompatActivity
 
     private List<Recipe> mList = new ArrayList<>();
     private RecipeAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
+    private GridLayoutManager mLayoutManager;
 
     @Inject
     RecipePresenter mPresenter;
@@ -45,12 +41,16 @@ public class RecipeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
         ButterKnife.bind(this);
         setUpDagger();
+
         mAdapter = new RecipeAdapter(mList);
-        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mLayoutManager = new GridLayoutManager(this, ViewUtils.calculateNoOfColumns(this),GridLayoutManager.VERTICAL, false);
+
         mRvRecipe.setAdapter(mAdapter);
         mRvRecipe.setLayoutManager(mLayoutManager);
+
         mPresenter.getAllRecipe();
         mSwipeRefresh.setOnRefreshListener(this);
     }

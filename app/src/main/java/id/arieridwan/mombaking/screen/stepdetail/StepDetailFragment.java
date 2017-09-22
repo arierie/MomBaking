@@ -1,43 +1,59 @@
 package id.arieridwan.mombaking.screen.stepdetail;
 
+import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 import org.parceler.Parcels;
-import java.util.ArrayList;
-import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import id.arieridwan.mombaking.R;
-import id.arieridwan.mombaking.adapter.IngredientAdapter;
-import id.arieridwan.mombaking.adapter.StepAdapter;
 import id.arieridwan.mombaking.model.Recipe;
-import static id.arieridwan.mombaking.utils.Constants.ARG_ITEM_ID;
+import static id.arieridwan.mombaking.utils.Constants.RECIPE_STEP_DETAIL;
 
 public class StepDetailFragment extends Fragment {
 
-    @BindView(R.id.rv_ingredient)
-    RecyclerView mRvIngredient;
+    @BindView(R.id.video_view)
+    SimpleExoPlayerView mVideoView;
 
-    @BindView(R.id.rv_step)
-    RecyclerView mRvStep;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+
+    @BindView(R.id.tv_desc)
+    TextView mTvDesc;
+
+    @BindView(R.id.iv_background)
+    ImageView mIvBackground;
 
     Unbinder unbinder;
 
-    private Recipe mItem;
-    private List<Recipe.IngredientsBean> mList = new ArrayList<>();
-    private LinearLayoutManager mLinearLayoutManager;
-    private IngredientAdapter mAdapter;
+    private SimpleExoPlayer player;
+    private boolean playWhenReady;
+    private int currentWindow;
 
-    private List<Recipe.StepsBean> mList2 = new ArrayList<>();
-    private LinearLayoutManager mLinearLayoutManager2;
-    private StepAdapter mAdapter2;
+    private long playbackPosition;
+
+    private Recipe.StepsBean mData;
 
     public StepDetailFragment() {
 
@@ -46,8 +62,8 @@ public class StepDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mItem = Parcels.unwrap(getArguments().getParcelable(ARG_ITEM_ID));
+        if (getArguments().containsKey(RECIPE_STEP_DETAIL)) {
+            mData = Parcels.unwrap(getArguments().getParcelable(RECIPE_STEP_DETAIL));
         }
     }
 
@@ -62,23 +78,100 @@ public class StepDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter = new IngredientAdapter(mList);
-        mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        mRvIngredient.setAdapter(mAdapter);
-        mRvIngredient.setLayoutManager(mLinearLayoutManager);
-        mAdapter2 = new StepAdapter(mList2);
-        mLinearLayoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        mRvStep.setAdapter(mAdapter2);
-        mRvStep.setLayoutManager(mLinearLayoutManager2);
         setData();
+        initializePlayer();
     }
 
     private void setData() {
-        if (mItem != null) {
-            mList.addAll(mItem.getIngredients());
-            mAdapter.notifyDataSetChanged();
-            mList2.addAll(mItem.getSteps());
-            mAdapter2.notifyDataSetChanged();
+        mTvTitle.setText(mData.getShortDescription());
+        mTvDesc.setText(mData.getDescription());
+        if (!TextUtils.isEmpty(mData.getThumbnailURL())) {
+            mIvBackground.setVisibility(View.VISIBLE);
+            Picasso.with(getActivity())
+                    .load(mData.getThumbnailURL())
+                    .placeholder(R.drawable.image_placeholder)
+                    .error(R.drawable.image_placeholder)
+                    .into(mIvBackground);
+        } else {
+            mIvBackground.setVisibility(View.GONE);
+        }
+        if (!TextUtils.isEmpty(mData.getVideoURL())) {
+            mVideoView.setVisibility(View.VISIBLE);
+        } else {
+            mVideoView.setVisibility(View.GONE);
+        }
+    }
+
+    private void initializePlayer() {
+        player = ExoPlayerFactory.newSimpleInstance(
+                new DefaultRenderersFactory(getActivity()),
+                new DefaultTrackSelector(), new DefaultLoadControl());
+
+        mVideoView.setPlayer(player);
+
+        player.setPlayWhenReady(playWhenReady);
+        player.seekTo(currentWindow, playbackPosition);
+
+        Uri uri = Uri.parse(mData.getVideoURL());
+        MediaSource mediaSource = buildMediaSource(uri);
+        player.prepare(mediaSource, true, false);
+    }
+
+    private MediaSource buildMediaSource(Uri uri) {
+        return new ExtractorMediaSource(uri,
+                new DefaultHttpDataSourceFactory("ua"),
+                new DefaultExtractorsFactory(), null, null);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Util.SDK_INT > 23) {
+            initializePlayer();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if ((Util.SDK_INT <= 23 || player == null)) {
+            initializePlayer();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (Util.SDK_INT > 23) {
+            releasePlayer();
+        }
+    }
+
+    @SuppressLint("InlinedApi")
+    private void hideSystemUi() {
+        mVideoView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+    }
+
+    private void releasePlayer() {
+        if (player != null) {
+            playbackPosition = player.getCurrentPosition();
+            currentWindow = player.getCurrentWindowIndex();
+            playWhenReady = player.getPlayWhenReady();
+            player.release();
+            player = null;
         }
     }
 

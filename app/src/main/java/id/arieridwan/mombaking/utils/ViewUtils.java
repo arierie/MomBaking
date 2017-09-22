@@ -12,7 +12,7 @@ public class ViewUtils {
     public static int calculateNoOfColumns(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int scalingFactor = 180;
+        int scalingFactor = 360;
         int noOfColumns = (int) (dpWidth / scalingFactor);
         return noOfColumns;
     }

@@ -1,7 +1,5 @@
 package id.arieridwan.mombaking.screen.recipe;
 
-import android.util.Log;
-
 import java.util.List;
 import javax.inject.Inject;
 import id.arieridwan.mombaking.data.ApiServices;
@@ -39,13 +37,11 @@ public class RecipePresenter implements RecipeContract.Presenter{
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("onError: ", e.getMessage());
                         mView.stopAndError();
                     }
 
                     @Override
                     public void onNext(List<Recipe> recipes) {
-                        Log.e("onNext: ", recipes.size()+" ah ah");
                         mView.getDataSuccess(recipes);
                     }
                 });

@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="id.arieridwan.mombaking.screen.stepdetail.StepDetailActivity"
-    tools:ignore="MergeRootFrame">
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -22,9 +20,44 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/main_detail_container"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/vg_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_prev"
+            fontPath="fonts/Lato-Bold.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:letterSpacing="0.01"
+            android:text="Prev"
+            android:textAlignment="center"
+            android:textColor="@color/soft_text"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_next"
+            fontPath="fonts/Lato-Bold.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:letterSpacing="0.01"
+            android:text="Next"
+            android:textAlignment="center"
+            android:textColor="@color/soft_text"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

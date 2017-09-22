@@ -1,23 +1,26 @@
 package id.arieridwan.mombaking.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
-
+import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.arieridwan.mombaking.R;
 import id.arieridwan.mombaking.model.Recipe;
+import id.arieridwan.mombaking.screen.recipedetail.RecipeDetailActivity;
+import id.arieridwan.mombaking.screen.stepdetail.StepDetailActivity;
+import id.arieridwan.mombaking.screen.stepdetail.StepDetailFragment;
+import static id.arieridwan.mombaking.utils.Constants.RECIPE_STEP;
+import static id.arieridwan.mombaking.utils.Constants.RECIPE_STEP_DETAIL;
+import static id.arieridwan.mombaking.utils.Constants.RECIPE_STEP_POS;
 
 /**
  * Created by arie on 9/20/17.
@@ -25,12 +28,13 @@ import id.arieridwan.mombaking.model.Recipe;
 
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder> {
 
-
     private Recipe.StepsBean mData;
     private List<Recipe.StepsBean> mList = new ArrayList<>();
+    private boolean isTwoPane;
 
-    public StepAdapter(List<Recipe.StepsBean> mList) {
+    public StepAdapter(List<Recipe.StepsBean> mList,boolean isTwoPane) {
         this.mList = mList;
+        this.isTwoPane = isTwoPane;
     }
 
     @Override
@@ -43,23 +47,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
     @Override
     public void onBindViewHolder(StepViewHolder holder, int position) {
         mData = mList.get(position);
-        Context context = holder.itemView.getContext();
-        if(!TextUtils.isEmpty(mData.getVideoURL())) {
-            holder.mIvPlay.setVisibility(View.VISIBLE);
-            try {
-                Picasso.with(context)
-                        .load(mData.getThumbnailURL())
-                        .placeholder(R.drawable.image_placeholder)
-                        .error(R.drawable.image_placeholder)
-                        .into(holder.mIvBackground);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            holder.mIvPlay.setVisibility(View.GONE);
-        }
         holder.mTvTitle.setText(mData.getShortDescription());
-        holder.mTvDesc.setText(mData.getDescription());
     }
 
     @Override
@@ -69,22 +57,31 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 
     class StepViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.iv_background)
-        ImageView mIvBackground;
-
-        @BindView(R.id.iv_play)
-        ImageView mIvPlay;
-
         @BindView(R.id.tv_title)
         TextView mTvTitle;
-
-        @BindView(R.id.tv_desc)
-        TextView mTvDesc;
 
         public StepViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(v -> {
+                if (isTwoPane) {
+                    Bundle arguments = new Bundle();
+                    arguments.putParcelable(RECIPE_STEP_DETAIL, Parcels.wrap(mList.get(getAdapterPosition())));
+                    StepDetailFragment fragment = new StepDetailFragment();
+                    fragment.setArguments(arguments);
+                    ((RecipeDetailActivity) itemView.getContext())
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_detail_container, fragment)
+                            .commit();
+                } else {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, StepDetailActivity.class);
+                    intent.putExtra(RECIPE_STEP, Parcels.wrap(mList.get(getAdapterPosition())));
+                    intent.putExtra(RECIPE_STEP_POS, getAdapterPosition());
+                    context.startActivity(intent);
+                }
+            });
         }
-
     }
 }

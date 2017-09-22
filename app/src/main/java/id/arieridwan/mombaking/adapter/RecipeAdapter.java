@@ -1,6 +1,5 @@
 package id.arieridwan.mombaking.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -17,8 +16,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.arieridwan.mombaking.R;
 import id.arieridwan.mombaking.model.Recipe;
-import id.arieridwan.mombaking.screen.stepdetail.StepDetailActivity;
-import static id.arieridwan.mombaking.utils.Constants.ARG_ITEM_ID;
+import id.arieridwan.mombaking.screen.recipedetail.RecipeDetailActivity;
+
+import static id.arieridwan.mombaking.utils.Constants.RECIPE;
 
 /**
  * Created by arieridwan on 27/08/2017.
@@ -43,9 +43,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
         mData = mList.get(position);
-        Context context = holder.itemView.getContext();
         if (!TextUtils.isEmpty(mData.getImage())) {
-            Picasso.with(context)
+            Picasso.with(holder.itemView.getContext())
                     .load(mData.getImage())
                     .placeholder(R.drawable.image_placeholder)
                     .error(R.drawable.image_placeholder)
@@ -56,11 +55,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         }
         holder.mTvTitle.setText(mData.getName());
         holder.mTvServing.setText("Servings " + mData.getServings());
-        holder.itemView.setOnClickListener(v -> {
-            Intent i = new Intent(context, StepDetailActivity.class);
-            i.putExtra(ARG_ITEM_ID, Parcels.wrap(mData));
-            context.startActivity(i);
-        });
     }
 
     @Override
@@ -85,6 +79,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         public RecipeViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(view -> {
+                Intent i = new Intent(itemView.getContext(), RecipeDetailActivity.class);
+                i.putExtra(RECIPE, Parcels.wrap(mList.get(getAdapterPosition())));
+                itemView.getContext().startActivity(i);
+            });
         }
 
     }

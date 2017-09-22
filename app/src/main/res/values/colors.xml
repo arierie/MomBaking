@@ -6,6 +6,7 @@
     <color name="darkBackground">#3f000000</color>
     <color name="white">#ffffff</color>
     <color name="soft_black">#504d4d</color>
+    <color name="soft_text">#716f6f</color>
     <color name="soft_green">#D5FAF5</color>
     <color name="soft_yellow">#FFFFCC</color>
     <color name="soft_blue">#85A8C7</color>
