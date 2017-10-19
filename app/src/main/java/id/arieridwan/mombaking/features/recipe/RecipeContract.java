@@ -1,4 +1,4 @@
-package id.arieridwan.mombaking.screen.recipe;
+package id.arieridwan.mombaking.features.recipe;
 
 import java.util.List;
 import id.arieridwan.mombaking.model.Recipe;

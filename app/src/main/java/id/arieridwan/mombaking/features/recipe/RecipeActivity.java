@@ -1,4 +1,4 @@
-package id.arieridwan.mombaking.screen.recipe;
+package id.arieridwan.mombaking.features.recipe;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;

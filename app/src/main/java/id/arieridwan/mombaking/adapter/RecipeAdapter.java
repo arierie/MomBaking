@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.arieridwan.mombaking.R;
 import id.arieridwan.mombaking.model.Recipe;
-import id.arieridwan.mombaking.screen.recipedetail.RecipeDetailActivity;
+import id.arieridwan.mombaking.features.recipedetail.RecipeDetailActivity;
 
 import static id.arieridwan.mombaking.utils.Constants.RECIPE;
 

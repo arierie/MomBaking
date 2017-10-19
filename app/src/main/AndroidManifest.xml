@@ -13,21 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".screen.recipedetail.RecipeDetailActivity"
+            android:name=".features.recipedetail.RecipeDetailActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
-            android:name=".screen.stepdetail.StepDetailActivity"
+            android:name=".features.stepdetail.StepDetailActivity"
             android:label="@string/title_main_detail"
-            android:parentActivityName=".screen.recipedetail.RecipeDetailActivity"
+            android:parentActivityName=".features.recipedetail.RecipeDetailActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="id.arieridwan.mombaking.screen.recipedetail.RecipeDetailActivity" />
+                android:value="id.arieridwan.mombaking.features.recipedetail.RecipeDetailActivity" />
         </activity>
-        <activity android:name=".screen.recipe.RecipeActivity">
+        <activity android:name=".features.recipe.RecipeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

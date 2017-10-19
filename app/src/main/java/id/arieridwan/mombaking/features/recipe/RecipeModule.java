@@ -1,4 +1,4 @@
-package id.arieridwan.mombaking.screen.recipe;
+package id.arieridwan.mombaking.features.recipe;
 
 import dagger.Module;
 import dagger.Provides;

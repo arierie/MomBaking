@@ -1,6 +1,5 @@
-package id.arieridwan.mombaking.screen.stepdetail;
+package id.arieridwan.mombaking.features.stepdetail;
 
-import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,12 +23,17 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import id.arieridwan.mombaking.R;
 import id.arieridwan.mombaking.model.Recipe;
 import static id.arieridwan.mombaking.utils.Constants.RECIPE_STEP_DETAIL;
+import static id.arieridwan.mombaking.utils.Constants.RECIPE_STEP_POS;
 
 public class StepDetailFragment extends Fragment {
 
@@ -53,7 +57,10 @@ public class StepDetailFragment extends Fragment {
 
     private long playbackPosition;
 
+    private Recipe mItem;
+    private List<Recipe.StepsBean> mList = new ArrayList<>();
     private Recipe.StepsBean mData;
+    private int position;
 
     public StepDetailFragment() {
 
@@ -63,7 +70,9 @@ public class StepDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments().containsKey(RECIPE_STEP_DETAIL)) {
-            mData = Parcels.unwrap(getArguments().getParcelable(RECIPE_STEP_DETAIL));
+            mItem = Parcels.unwrap(getArguments().getParcelable(RECIPE_STEP_DETAIL));
+            position = getArguments().getInt(RECIPE_STEP_POS, 0);
+            mList.addAll(mItem.getSteps());
         }
     }
 
@@ -83,6 +92,7 @@ public class StepDetailFragment extends Fragment {
     }
 
     private void setData() {
+        mData = mList.get(position);
         mTvTitle.setText(mData.getShortDescription());
         mTvDesc.setText(mData.getDescription());
         if (!TextUtils.isEmpty(mData.getThumbnailURL())) {
@@ -153,16 +163,6 @@ public class StepDetailFragment extends Fragment {
         if (Util.SDK_INT > 23) {
             releasePlayer();
         }
-    }
-
-    @SuppressLint("InlinedApi")
-    private void hideSystemUi() {
-        mVideoView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
     private void releasePlayer() {

@@ -1,4 +1,4 @@
-package id.arieridwan.mombaking.screen.recipe;
+package id.arieridwan.mombaking.features.recipe;
 
 import dagger.Component;
 import id.arieridwan.mombaking.PerActivity;
