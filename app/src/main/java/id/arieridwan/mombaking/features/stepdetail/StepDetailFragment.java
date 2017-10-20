@@ -31,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import id.arieridwan.mombaking.R;
-import id.arieridwan.mombaking.model.Recipe;
+import id.arieridwan.mombaking.data.api.response.RecipeResponse;
 import static id.arieridwan.mombaking.utils.Constants.RECIPE_STEP_DETAIL;
 import static id.arieridwan.mombaking.utils.Constants.RECIPE_STEP_POS;
 
@@ -57,9 +57,9 @@ public class StepDetailFragment extends Fragment {
 
     private long playbackPosition;
 
-    private Recipe mItem;
-    private List<Recipe.StepsBean> mList = new ArrayList<>();
-    private Recipe.StepsBean mData;
+    private RecipeResponse mItem;
+    private List<RecipeResponse.StepsBean> mList = new ArrayList<>();
+    private RecipeResponse.StepsBean mData;
     private int position;
 
     public StepDetailFragment() {

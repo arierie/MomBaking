@@ -1,7 +1,8 @@
-package id.arieridwan.mombaking.data;
+package id.arieridwan.mombaking.data.api;
 
 import java.util.List;
-import id.arieridwan.mombaking.model.Recipe;
+
+import id.arieridwan.mombaking.data.api.response.RecipeResponse;
 import retrofit2.http.GET;
 import rx.Observable;
 
@@ -11,5 +12,5 @@ import rx.Observable;
 
 public interface ApiServices {
     @GET("topher/2017/May/59121517_baking/baking.json")
-    Observable<List<Recipe>> getAllRecipe();
+    Observable<List<RecipeResponse>> getAllRecipe();
 }

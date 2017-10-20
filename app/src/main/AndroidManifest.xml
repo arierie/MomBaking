@@ -15,9 +15,7 @@
         <activity
             android:name=".features.recipedetail.RecipeDetailActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".features.stepdetail.StepDetailActivity"
             android:label="@string/title_main_detail"
@@ -27,11 +25,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="id.arieridwan.mombaking.features.recipedetail.RecipeDetailActivity" />
         </activity>
-        <activity android:name=".features.recipe.RecipeActivity">
+        <activity android:name=".features.recipeResponse.RecipeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <receiver android:name=".features.widget.RecipeWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/recipe_widget_info"/>
+        </receiver>
+        <activity android:name=".features.widget.RecipeWidgetConfigActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
     </application>

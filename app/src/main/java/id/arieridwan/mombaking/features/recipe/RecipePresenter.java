@@ -2,8 +2,8 @@ package id.arieridwan.mombaking.features.recipe;
 
 import java.util.List;
 import javax.inject.Inject;
-import id.arieridwan.mombaking.data.ApiServices;
-import id.arieridwan.mombaking.model.Recipe;
+import id.arieridwan.mombaking.data.api.ApiServices;
+import id.arieridwan.mombaking.data.api.response.RecipeResponse;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -29,7 +29,7 @@ public class RecipePresenter implements RecipeContract.Presenter{
         apiServices.getAllRecipe()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<Recipe>>() {
+                .subscribe(new Subscriber<List<RecipeResponse>>() {
                     @Override
                     public void onCompleted() {
                         mView.stopAndHide();
@@ -41,8 +41,8 @@ public class RecipePresenter implements RecipeContract.Presenter{
                     }
 
                     @Override
-                    public void onNext(List<Recipe> recipes) {
-                        mView.getDataSuccess(recipes);
+                    public void onNext(List<RecipeResponse> recipeResponses) {
+                        mView.getDataSuccess(recipeResponses);
                     }
                 });
     }

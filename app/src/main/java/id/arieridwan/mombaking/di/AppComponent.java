@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import javax.inject.Singleton;
 import dagger.Component;
-import id.arieridwan.mombaking.data.ApiServices;
+import id.arieridwan.mombaking.data.api.ApiServices;
 
 /**
  * Created by arieridwan on 27/08/2017.

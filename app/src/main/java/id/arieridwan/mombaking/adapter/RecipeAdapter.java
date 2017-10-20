@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.arieridwan.mombaking.R;
-import id.arieridwan.mombaking.model.Recipe;
+import id.arieridwan.mombaking.data.api.response.RecipeResponse;
 import id.arieridwan.mombaking.features.recipedetail.RecipeDetailActivity;
 
 import static id.arieridwan.mombaking.utils.Constants.RECIPE;
@@ -26,10 +26,10 @@ import static id.arieridwan.mombaking.utils.Constants.RECIPE;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
-    private Recipe mData;
-    private List<Recipe> mList = new ArrayList<>();
+    private RecipeResponse mData;
+    private List<RecipeResponse> mList = new ArrayList<>();
 
-    public RecipeAdapter(List<Recipe> mList) {
+    public RecipeAdapter(List<RecipeResponse> mList) {
         this.mList = mList;
     }
 

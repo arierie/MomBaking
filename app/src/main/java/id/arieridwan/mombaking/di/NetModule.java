@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
-import id.arieridwan.mombaking.data.ApiServices;
+import id.arieridwan.mombaking.data.api.ApiServices;
 import id.arieridwan.mombaking.utils.Constants;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;

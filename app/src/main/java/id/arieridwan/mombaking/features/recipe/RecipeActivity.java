@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 import id.arieridwan.mombaking.MomBakingApp;
 import id.arieridwan.mombaking.R;
 import id.arieridwan.mombaking.adapter.RecipeAdapter;
-import id.arieridwan.mombaking.model.Recipe;
+import id.arieridwan.mombaking.data.api.response.RecipeResponse;
 import id.arieridwan.mombaking.utils.ViewUtils;
 
 public class RecipeActivity extends AppCompatActivity
@@ -30,7 +30,7 @@ public class RecipeActivity extends AppCompatActivity
     @BindView(R.id.error_view)
     FrameLayout mErrorView;
 
-    private List<Recipe> mList = new ArrayList<>();
+    private List<RecipeResponse> mList = new ArrayList<>();
     private RecipeAdapter mAdapter;
     private GridLayoutManager mLayoutManager;
 
@@ -78,7 +78,7 @@ public class RecipeActivity extends AppCompatActivity
     }
 
     @Override
-    public void getDataSuccess(List<Recipe> item) {
+    public void getDataSuccess(List<RecipeResponse> item) {
         mList.clear();
         mList.addAll(item);
         mAdapter.notifyDataSetChanged();

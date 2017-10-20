@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.arieridwan.mombaking.R;
-import id.arieridwan.mombaking.model.Recipe;
+import id.arieridwan.mombaking.data.api.response.RecipeResponse;
 
 import static id.arieridwan.mombaking.utils.Constants.RECIPE_STEP;
 import static id.arieridwan.mombaking.utils.Constants.RECIPE_STEP_DETAIL;
@@ -35,7 +35,7 @@ public class StepDetailActivity extends AppCompatActivity {
     @BindView(R.id.tv_next)
     TextView mTvNext;
 
-    private Recipe mItem;
+    private RecipeResponse mItem;
     private int position;
 
     @Override

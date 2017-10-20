@@ -11,7 +11,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.arieridwan.mombaking.R;
-import id.arieridwan.mombaking.model.Recipe;
+import id.arieridwan.mombaking.data.api.response.RecipeResponse;
 
 /**
  * Created by arie on 9/20/17.
@@ -19,13 +19,13 @@ import id.arieridwan.mombaking.model.Recipe;
 
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder> {
 
-    private Recipe.StepsBean mData;
-    private List<Recipe.StepsBean> mList = new ArrayList<>();
+    private RecipeResponse.StepsBean mData;
+    private List<RecipeResponse.StepsBean> mList = new ArrayList<>();
 
     private boolean isTwoPane;
     private StepListener mListener;
 
-    public StepAdapter(List<Recipe.StepsBean> mList, boolean isTwoPane, StepListener mListener) {
+    public StepAdapter(List<RecipeResponse.StepsBean> mList, boolean isTwoPane, StepListener mListener) {
         this.mList = mList;
         this.isTwoPane = isTwoPane;
         this.mListener = mListener;

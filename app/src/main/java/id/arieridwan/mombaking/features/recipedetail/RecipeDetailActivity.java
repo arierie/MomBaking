@@ -13,13 +13,12 @@ import android.widget.TextView;
 import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.arieridwan.mombaking.R;
 import id.arieridwan.mombaking.adapter.StepAdapter;
-import id.arieridwan.mombaking.model.Recipe;
+import id.arieridwan.mombaking.data.api.response.RecipeResponse;
 import id.arieridwan.mombaking.features.stepdetail.StepDetailActivity;
 import id.arieridwan.mombaking.features.stepdetail.StepDetailFragment;
 
@@ -39,11 +38,11 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepAdapt
     @BindView(R.id.tv_ingredient)
     TextView mTvIngredient;
 
-    private Recipe mData;
+    private RecipeResponse mData;
 
     private boolean mTwoPane;
 
-    private List<Recipe.StepsBean> mList = new ArrayList<>();
+    private List<RecipeResponse.StepsBean> mList = new ArrayList<>();
     private LinearLayoutManager mLinearLayoutManager;
     private StepAdapter mAdapter;
 

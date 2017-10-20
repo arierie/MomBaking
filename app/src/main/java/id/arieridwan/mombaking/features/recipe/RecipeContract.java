@@ -1,7 +1,7 @@
 package id.arieridwan.mombaking.features.recipe;
 
 import java.util.List;
-import id.arieridwan.mombaking.model.Recipe;
+import id.arieridwan.mombaking.data.api.response.RecipeResponse;
 
 /**
  * Created by arieridwan on 27/08/2017.
@@ -12,7 +12,7 @@ public interface RecipeContract {
         void startLoading();
         void stopAndHide();
         void stopAndError();
-        void getDataSuccess(List<Recipe> item);
+        void getDataSuccess(List<RecipeResponse> item);
 
     }
     interface Presenter {
